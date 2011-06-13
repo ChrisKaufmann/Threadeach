@@ -10,6 +10,7 @@ my $threads=shift || 10;
 
 my @lines=Threadeach::threadsome(\&run_bff,$threads,$start..$end);
 
+#function to run threaded
 sub run_bff
 {
 	my $id=shift;
@@ -19,11 +20,11 @@ sub run_bff
 		unlink("STOP");
 		last;
 	}
-	my $cookie=$id%$threads;
+	my $cookie=$id%$threads;	#cookie id is id modulo #of threads(100threads will have 0-99, etc)
 	my $cmd="bash bff.sh $id cookie$cookie.txt";
 	print "$cmd\n";
 	system($cmd);
-	unlink("cookie$cookie.txt");
+	unlink("cookie$cookie.txt");#may take a fraction longer, but I think it's cleaner to clean up here
 }
 
 sub usage
