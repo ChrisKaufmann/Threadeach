@@ -13,7 +13,7 @@ my @lines=Threadeach::threadsome(\&run_blag,$threads,$start..$end);
 sub run_blag
 {
 	my $id=shift;
-	if(-e "STOP")	#end if the stop file exists (and remove it for laziness)
+	if(-e "STOP_BLAG")	#end if the stop file exists (and remove it for laziness)
 	{
 		print "Found 'STOP' file, stopping main thread, others will finish\n";
 		unlink("STOP");
