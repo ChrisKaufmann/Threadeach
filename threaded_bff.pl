@@ -2,7 +2,6 @@
 use warnings;
 use strict;
 use Threadeach;
-use forks;
 
 my $start=shift || usage();
 my $end=shift || usage();
