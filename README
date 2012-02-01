@@ -1,31 +1,24 @@
 Threadeach.pm - a perl module for easy threading of processes.
-Given a reference to a function and an array, it will create a thread for each instance (up to a maximum),
-creating a new thread whenever one exits, until all the elements in the array have been completed.
-It will then return an array of the returned values (if any) in order.
 
-There are three options:
-sub threadeach(\&subroutine,@array); # will run with the number of cpus in the machine (or 4 if unavailable)
-sub threadall(\&subroutine,@array); #will thread them all at once (be careful here)
-sub threadsome(\&subroutine,$num_of_threads,@array); #will use $num_of_threads threads at a time
+use instead of foreach and it will run (num of cpus) threads over the array and return.
 
-The threaded_bff.pl program will run a threaded version of the bff.sh script from the archive.org team.
-threaded_bff.pl <start> <end> <# threads>
-ex: perl threaded_bff.pl 10100000 10199999 100
-will grab from 10,100,000 to 10,199,999 with 100 threads at all times.  
-
-Example:
-#!/usr/bin/perl
-use Threadeach;
-
-my @lines=Threadeach::threadall(\&get_ip_info,0..10);
-print join("\n",@lines);
-
-sub get_ip_info
+ex:
+my @a=(1,2,3,4,5);
+threadeach my $b(@a)
 {
-    my $end=shift;
-	sleep(rand(5));
-	return $end;
+	print "$b";
 }
 
+will print 12345 (but not necessarily in that order).
 
-Will print "012345678910" in a little over 5 seconds, threadeach will take a little longer.
+threadall will run as many threads as there are elements in the array.
+
+threadx is a special case, and will run as many as follow the threadx
+
+threadx20 my $c('A'..'Z')
+{
+	print "$c";
+}
+
+will run 20 threads at a time.
+
